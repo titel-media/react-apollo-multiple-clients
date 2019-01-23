@@ -1,7 +1,7 @@
 # React Apollo Multiple Clients
 
 ## Motivation and Idea
-
+Inspired by Rafael Nunes (see [Medium Article: Apollo Multiple Clients with React](https://medium.com/open-graphql/apollo-multiple-clients-with-react-b34b571210a5)), we needed a more generic solution.
 
 ## Install
 
