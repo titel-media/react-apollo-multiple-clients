@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": ["last 2 version"]
+        },
+        "useBuiltIns": "entry",
+        "modules": "commonjs"
+      }
+    ]
+  ],
+  "plugins": ["transform-export-extensions"]
+}

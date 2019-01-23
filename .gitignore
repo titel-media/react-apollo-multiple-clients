@@ -1,0 +1,7 @@
+yarn-debug.log*
+yarn-error.log*
+coverage
+node_modules/
+.env
+.envrc
+.DS_Store

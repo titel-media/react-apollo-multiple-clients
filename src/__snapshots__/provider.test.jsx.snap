@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`React Apollo Multiple Clients should throw error when client cannot be found 1`] = `[Error: Could not find client undefinedClient]`;
+
+exports[`React Apollo Multiple Clients should throw error when no client is provided 1`] = `[Error: You need to define at least one client]`;
+
+exports[`React Apollo Multiple Clients should use client1 1`] = `"client1"`;
+
+exports[`React Apollo Multiple Clients should use client2 1`] = `"client2"`;

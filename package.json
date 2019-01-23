@@ -1,0 +1,73 @@
+{
+  "name": "@titelmedia/react-apollo-multiple-clients",
+  "version": "1.0.0",
+  "description": "Use Multiple Clients for Your GraphQL Queries with React Apollo Client",
+  "keywords": [
+    "React Apollo",
+    "GraphQL",
+    "Apollo Client",
+    "Multiple Clients"
+  ],
+  "homepage": "https://github.com/titel-media/react-apollo-multiple-clients",
+  "bugs": {
+    "url": "https://github.com/titel-media/react-apollo-multiple-clients/issues",
+    "email": "dev@highsnobiety.com"
+  },
+  "engines": {
+    "node": "10.14.2",
+    "npm": "6.4.1"
+  },
+  "repository": "git@github.com:titel-media/react-apollo-multiple-clients.git",
+  "license": "MIT",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "eslint --config=.eslintrc.js --ext .jsx,.js .",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "apollo-client": "^2.4.12",
+    "graphql": "^14.1.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.7.0",
+    "react-apollo": "^2.4.0",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-module-resolver": "^3.1.3",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "eslint": "^5.12.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-import-resolver-babel-module": "^5.0.0",
+    "eslint-plugin-import": "^2.15.0",
+    "eslint-plugin-jest": "^22.1.3",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.4",
+    "husky": "^1.3.1",
+    "jest": "^23.6.0",
+    "lint-staged": "^8.1.0",
+    "react-test-renderer": "^16.7.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": ["yarn lint --fix", "git add"]
+  }
+}
