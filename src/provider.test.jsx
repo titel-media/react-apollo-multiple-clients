@@ -1,12 +1,14 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import ApolloMultipleClientsProvider from './provider';
-import Query from './query';
+import { ApolloMultipleClientsProvider, Query, Mutation } from '.';
 
+/* eslint-disable react/prop-types */
 jest.mock('react-apollo', () => ({
-  Query: ({ client }) => client,
+  Query: ({ client, ...rest }) => <div className="query" {...rest}>{client}</div>,
+  Mutation: ({ client, ...rest }) => <div className="mutation" {...rest}>{client}</div>,
 }));
+/* eslint-enable react/prop-types */
 
 const client1 = 'client1';
 const client2 = 'client2';
@@ -38,7 +40,7 @@ describe('React Apollo Multiple Clients', () => {
   it('should use client2', () => {
     const app = renderer.create(
       <ApolloMultipleClientsProvider clients={clientList}>
-        <Query clientName="clientName2">{props => props.client}</Query>
+        <Mutation clientName="clientName2">{props => props.client}</Mutation>
       </ApolloMultipleClientsProvider>,
     );
     expect(app.toJSON()).toMatchSnapshot();

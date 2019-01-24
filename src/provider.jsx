@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { any, objectOf, node } from 'prop-types';
 
-export const { Provider, Consumer } = React.createContext();
+export const { Provider, Consumer } = React.createContext('react-apollo-multiple-clients');
 
 export const ApolloMultipleClientsConsumer = Consumer;
 

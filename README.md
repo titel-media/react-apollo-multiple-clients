@@ -16,7 +16,7 @@ You can get rid of the original `<ApolloProvider>` and use `<ApolloMultipleClien
 import React from 'react';
 import ApolloClient from 'apollo-boost';
 
-import { ApolloMultipleClientsProvider, Query } from '@titelmedia/react-apollo-multiple-clients';
+import { ApolloMultipleClientsProvider, Query, Mutation } from '@titelmedia/react-apollo-multiple-clients';
 
 const client1 = new ApolloClient({
   uri: 'https://graphql.client1.com'
@@ -47,10 +47,16 @@ const QueryComponent = ({ clientName }) => (
   </Query>
 );
 
+const MutationComponent = ({ clientName }) => (
+  <Mutation clientName={clientName} query={FETCH_TEST}>
+    <TestComponent />
+  </Mutation>
+);
+
 const App = () => (
   <ApolloMultipleClientsProvider clients={clientList}>
     <QueryComponent clientName="firstNamespace" />
-    <QueryComponent clientName="secondNamespace" />
+    <MutationComponent clientName="secondNamespace" />
   </ApolloMultipleClientsProvider>
 );
 

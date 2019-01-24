@@ -4,6 +4,18 @@ exports[`React Apollo Multiple Clients should throw error when client cannot be 
 
 exports[`React Apollo Multiple Clients should throw error when no client is provided 1`] = `[Error: You need to define at least one client]`;
 
-exports[`React Apollo Multiple Clients should use client1 1`] = `"client1"`;
+exports[`React Apollo Multiple Clients should use client1 1`] = `
+<div
+  className="query"
+>
+  client1
+</div>
+`;
 
-exports[`React Apollo Multiple Clients should use client2 1`] = `"client2"`;
+exports[`React Apollo Multiple Clients should use client2 1`] = `
+<div
+  className="mutation"
+>
+  client2
+</div>
+`;
