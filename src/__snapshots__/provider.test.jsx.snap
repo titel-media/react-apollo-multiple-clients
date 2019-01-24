@@ -19,3 +19,14 @@ exports[`React Apollo Multiple Clients should use client2 1`] = `
   client2
 </div>
 `;
+
+exports[`React Apollo Multiple Clients should work with without provider 1`] = `
+Array [
+  <div
+    className="query"
+  />,
+  <div
+    className="mutation"
+  />,
+]
+`;

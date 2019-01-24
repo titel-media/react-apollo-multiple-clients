@@ -25,12 +25,9 @@
     "test": "jest --coverage"
   },
   "dependencies": {
-    "apollo-client": "^2.4.12",
-    "graphql": "^14.1.1",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
-    "react-apollo": "^2.4.0",
-    "react-dom": "^16.7.0"
+    "react-apollo": "^2.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",

@@ -6,7 +6,7 @@ import { ApolloMultipleClientsConsumer } from './provider';
 
 const Query = ({ clientName, ...rest }) => (
   <ApolloMultipleClientsConsumer>
-    {({ getClient }) => <ApolloQuery client={getClient(clientName)} {...rest} />}
+    {({ getClient }) => <ApolloQuery {...(getClient ? { client: getClient(clientName) } : {})} {...rest} />}
   </ApolloMultipleClientsConsumer>
 );
 
