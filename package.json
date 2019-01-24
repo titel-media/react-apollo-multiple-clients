@@ -13,10 +13,6 @@
     "url": "https://github.com/titel-media/react-apollo-multiple-clients/issues",
     "email": "dev@highsnobiety.com"
   },
-  "engines": {
-    "node": "10.14.2",
-    "npm": "6.4.1"
-  },
   "repository": "git@github.com:titel-media/react-apollo-multiple-clients.git",
   "license": "MIT",
   "main": "src/index.js",

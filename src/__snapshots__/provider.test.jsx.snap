@@ -1,32 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`React Apollo Multiple Clients should throw error when client cannot be found 1`] = `[Error: Could not find client undefinedClient]`;
-
-exports[`React Apollo Multiple Clients should throw error when no client is provided 1`] = `[Error: You need to define at least one client]`;
-
-exports[`React Apollo Multiple Clients should use client1 1`] = `
-<div
-  className="query"
->
-  client1
+exports[`React Apollo Multiple Clients should not override client outside provider 1`] = `
+<div>
+  <div
+    className="query"
+  />
 </div>
 `;
 
-exports[`React Apollo Multiple Clients should use client2 1`] = `
-<div
-  className="mutation"
->
-  client2
+exports[`React Apollo Multiple Clients should override client inside provider 1`] = `
+<div>
+  <div
+    className="mutation"
+  >
+    clientos
+  </div>
 </div>
 `;
 
-exports[`React Apollo Multiple Clients should work with without provider 1`] = `
+exports[`React Apollo Multiple Clients should provide correct client 1`] = `
 Array [
   <div
     className="query"
-  />,
+  >
+    clientos
+  </div>,
   <div
     className="mutation"
-  />,
+  >
+    clientos
+  </div>,
 ]
+`;
+
+exports[`React Apollo Multiple Clients should throw error when client cannot be found 1`] = `[Error: Please provide a client namespace]`;
+
+exports[`React Apollo Multiple Clients should work with class as well 1`] = `
+<div>
+  clientos
+</div>
 `;

@@ -10,13 +10,15 @@ yarn @titelmedia/react-apollo-multiple-clients
 ```
 
 ## Usage
-You can get rid of the original `<ApolloProvider>` and use `<ApolloMultipleClientsProvider>` instead.
+You can get rid of the original `<ApolloProvider>` and use `<ApolloMultipleClientsProvider>` instead. Use the Higher Order Component 'withMultipleClients' to set a namespace.
 
 ```js
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
+import { Query, Mutation } from 'react-apollo';
 
-import { ApolloMultipleClientsProvider, Query, Mutation } from '@titelmedia/react-apollo-multiple-clients';
+import { ApolloMultipleClientsProvider, withMultipleClients } from '@titelmedia/react-apollo-multiple-clients';
 
 const client1 = new ApolloClient({
   uri: 'https://graphql.client1.com'
@@ -39,26 +41,27 @@ const FETCH_TEST = gql`
   }
 `;
 
-const TestComponent = ({error, load, data: { test }}) => (loading || error) ? null : test;
+const InnerComponent = ({error, load, data: { test }}) => (loading || error) ? null : test;
 
-const QueryComponent = ({ clientName }) => (
-  <Query clientName={clientName} query={FETCH_TEST} variables={{ foo: 'bar' }}>
-    <TestComponent />
+
+const Component = ({ client, ...rest }) => (
+  <Query client={client} query={FETCH_TEST} variables={{ foo: 'bar' }}>
+    <InnerComponent {...rest} />
   </Query>
-);
-
-const MutationComponent = ({ clientName }) => (
-  <Mutation clientName={clientName} query={FETCH_TEST}>
-    <TestComponent />
+  <Mutation client={client} query={FETCH_TEST} variables={{ foo: 'bar' }}>
+    <InnerComponent {...rest} />
   </Mutation>
 );
 
+const WrapperComponentClient1 = withMultipleClients('firstNamespace')(Component);
+const WrapperComponentClient2 = withMultipleClients('secondNamespace')(Component);
+
 const App = () => (
   <ApolloMultipleClientsProvider clients={clientList}>
-    <QueryComponent clientName="firstNamespace" />
-    <MutationComponent clientName="secondNamespace" />
+    <WrapperComponentClient1 />
+    <WrapperComponentClient2 />
   </ApolloMultipleClientsProvider>
 );
 
-<App />
+ReactDOM.render(<App />, document.getElementById('root'));
 ```

@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import renderer from 'react-test-renderer';
-import { ApolloProvider } from 'react-apollo';
+import { objectOf, any } from 'prop-types';
+import { Query as ApolloQuery, Mutation as ApolloMutation } from 'react-apollo';
 
-import { ApolloMultipleClientsProvider, Query, Mutation } from '.';
+import { ApolloMultipleClientsProvider, withMultipleClients } from '.';
 
 /* eslint-disable react/prop-types */
 jest.mock('react-apollo', () => ({
   Query: ({ client, ...rest }) => <div className="query" {...rest}>{client}</div>,
   Mutation: ({ client, ...rest }) => <div className="mutation" {...rest}>{client}</div>,
-  ApolloProvider: ({ children }) => children,
 }));
 /* eslint-enable react/prop-types */
 
@@ -29,42 +29,13 @@ describe('React Apollo Multiple Clients', () => {
   afterAll(() => {
     console.error = global.consoleError;
   });
-  /* eslint-enable no-console */
-  it('should use client1', () => {
-    const app = renderer.create(
-      <ApolloMultipleClientsProvider clients={clientList}>
-        <Query clientName="clientName1">{props => props.client}</Query>
-      </ApolloMultipleClientsProvider>,
-    );
-    expect(app.toJSON()).toMatchSnapshot();
-  });
-
-  it('should use client2', () => {
-    const app = renderer.create(
-      <ApolloMultipleClientsProvider clients={clientList}>
-        <Mutation clientName="clientName2">{props => props.client}</Mutation>
-      </ApolloMultipleClientsProvider>,
-    );
-    expect(app.toJSON()).toMatchSnapshot();
-  });
-
-  it('should throw error when no client is provided', () => {
-    try {
-      renderer.create(
-        <ApolloMultipleClientsProvider clients={null}>
-          <div />
-        </ApolloMultipleClientsProvider>,
-      );
-    } catch (err) {
-      expect(err).toMatchSnapshot();
-    }
-  });
 
   it('should throw error when client cannot be found', () => {
     try {
+      const Enriched = withMultipleClients()(ApolloMutation);
       renderer.create(
         <ApolloMultipleClientsProvider clients={clientList}>
-          <Query clientName="undefinedClient">{props => props.client}</Query>
+          <Enriched />
         </ApolloMultipleClientsProvider>,
       );
     } catch (err) {
@@ -72,13 +43,70 @@ describe('React Apollo Multiple Clients', () => {
     }
   });
 
-  it('should work with without provider', () => {
+  it('should provide correct client', () => {
+    const EnrichedQuery = withMultipleClients('test')(ApolloQuery);
+    const EnrichedMutation = withMultipleClients('test')(ApolloMutation);
+
     const app = renderer.create(
-      <ApolloProvider>
-        <Query clientName="clientName">{props => props.client}</Query>
-        <Mutation clientName="clientName">{props => props.client}</Mutation>
-      </ApolloProvider>,
+      <ApolloMultipleClientsProvider clients={{ test: 'clientos' }}>
+        <EnrichedQuery />
+        <EnrichedMutation />
+      </ApolloMultipleClientsProvider>,
     );
+
+    expect(app.toJSON()).toMatchSnapshot();
+  });
+
+  it('should not override client outside provider', () => {
+    const Enriched = withMultipleClients('test')(ApolloQuery);
+
+    const app = renderer.create(
+      <div>
+        <Enriched client="foobar-NOT-overridden" />
+      </div>,
+    );
+
+    expect(app.toJSON()).toMatchSnapshot();
+  });
+
+  it('should override client inside provider', () => {
+    const Enriched = withMultipleClients('test')(ApolloMutation);
+
+    const app = renderer.create(
+      <div>
+        <ApolloMultipleClientsProvider clients={{ test: 'clientos' }}>
+          <Enriched client="foobar-overridden" />
+        </ApolloMultipleClientsProvider>
+      </div>,
+    );
+
+    expect(app.toJSON()).toMatchSnapshot();
+  });
+
+  it('should work with class as well', () => {
+    class Foo extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {};
+      }
+
+      render() {
+        const { client } = this.props;
+        return <div>{client}</div>;
+      }
+    }
+    Foo.propTypes = {
+      client: objectOf(any).isRequired,
+    };
+
+    const Enriched = withMultipleClients('test')(Foo);
+
+    const app = renderer.create(
+      <ApolloMultipleClientsProvider clients={{ test: 'clientos' }}>
+        <Enriched />
+      </ApolloMultipleClientsProvider>,
+    );
+
     expect(app.toJSON()).toMatchSnapshot();
   });
 });
