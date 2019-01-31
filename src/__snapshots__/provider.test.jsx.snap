@@ -3,17 +3,31 @@
 exports[`React Apollo Multiple Clients should not override client outside provider 1`] = `
 <div>
   <div
-    className="query"
-  />
+    className="provider null"
+  >
+    <div
+      className="query"
+      client="foobar-NOT-overridden"
+    >
+      <span />
+    </div>
+  </div>
 </div>
 `;
 
 exports[`React Apollo Multiple Clients should override client inside provider 1`] = `
 <div>
   <div
-    className="mutation"
+    className="provider clientos"
   >
-    clientos
+    <div
+      className="query"
+      client="foobar-overridden"
+    >
+      <span>
+        clientos
+      </span>
+    </div>
   </div>
 </div>
 `;
@@ -21,22 +35,96 @@ exports[`React Apollo Multiple Clients should override client inside provider 1`
 exports[`React Apollo Multiple Clients should provide correct client 1`] = `
 Array [
   <div
-    className="query"
+    className="provider client1"
   >
-    clientos
+    <div
+      className="query"
+    >
+      <span>
+        client1
+      </span>
+    </div>
   </div>,
   <div
-    className="mutation"
+    className="provider client2"
   >
-    clientos
+    <div
+      className="query"
+    >
+      <span>
+        client2
+      </span>
+    </div>
   </div>,
 ]
 `;
 
-exports[`React Apollo Multiple Clients should throw error when client cannot be found 1`] = `[Error: Please provide a client namespace]`;
+exports[`React Apollo Multiple Clients should provide correct client within nested provider 1`] = `
+Array [
+  <div
+    className="provider client1"
+  >
+    <div
+      className="query"
+    >
+      <span>
+        client1
+      </span>
+    </div>
+  </div>,
+  <div
+    className="provider client1"
+  >
+    <div
+      className="query"
+    >
+      <span>
+        client1
+      </span>
+      <div
+        className="query"
+      >
+        <span>
+          client1
+        </span>
+      </div>
+      <div
+        className="provider client2"
+      >
+        <div
+          className="query"
+        >
+          <span>
+            client2
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <div
+    className="provider client2"
+  >
+    <div
+      className="query"
+    >
+      <span>
+        client2
+      </span>
+    </div>
+  </div>,
+]
+`;
+
+exports[`React Apollo Multiple Clients should throw error when client cannot be found 1`] = `[Error: Could not find client not-available]`;
+
+exports[`React Apollo Multiple Clients should throw error when client no client is given 1`] = `[Error: Please provide a client namespace]`;
+
+exports[`React Apollo Multiple Clients should throw error when provider has no clients 1`] = `[Error: You need to define at least one client]`;
 
 exports[`React Apollo Multiple Clients should work with class as well 1`] = `
-<div>
-  clientos
+<div
+  className="provider clientos"
+>
+  <div />
 </div>
 `;

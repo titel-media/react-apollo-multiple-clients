@@ -43,25 +43,45 @@ const FETCH_TEST = gql`
 
 const InnerComponent = ({error, load, data: { test }}) => (loading || error) ? null : test;
 
-
-const Component = ({ client, ...rest }) => (
-  <Query client={client} query={FETCH_TEST} variables={{ foo: 'bar' }}>
+const Component = ({ ...rest }) => (
+  <Query query={FETCH_TEST} variables={{ foo: 'bar' }}>
     <InnerComponent {...rest} />
   </Query>
-  <Mutation client={client} query={FETCH_TEST} variables={{ foo: 'bar' }}>
+  <Mutation query={FETCH_TEST} variables={{ foo: 'bar' }}>
     <InnerComponent {...rest} />
   </Mutation>
 );
 
-const WrapperComponentClient1 = withClient('firstNamespace')(Component);
-const WrapperComponentClient2 = withClient('secondNamespace')(Component);
+const ClientQueryContainer = withClient('clientName1')(Component);
+const ClientQuery1 = withClient('clientName1')(Component);
+const ClientQuery2 = withClient('clientName2')(Component);
 
 const App = () => (
   <ApolloMultipleClientsProvider clients={clientList}>
-    <WrapperComponentClient1 />
-    <WrapperComponentClient2 />
-  </ApolloMultipleClientsProvider>
+    <ClientQuery1 />
+    <ClientQueryContainer>
+      <ClientQuery1 />
+      <ClientQuery2 />
+    </ClientQueryContainer>
+    <ClientQuery2 />
+  </ApolloMultipleClientsProvider>,
 );
+
+/* Output will be something like
+  <ApolloProvider client={client1}>
+    <ClientQuery1 /> // context is client1
+    <ClientQueryContainer>
+      <ApolloProvider client={client2}>
+        <ClientQuery2 /> // context is client2
+      </ApolloProvider>
+      <ClientQuery1 /> // context is client1 and is not extra wrapped inside a provider
+    </ClientQueryContainer>
+    <ApolloProvider client={client2}>
+      <ClientQuery2 /> // context is client2 and will be wrapped inside a new container
+    </ApolloProvider>
+  </ApolloProvider>
+
+*/
 
 ReactDOM.render(<App />, document.getElementById('root'));
 ```
