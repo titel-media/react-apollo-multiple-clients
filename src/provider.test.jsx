@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 import { objectOf, any } from 'prop-types';
 import { Query as ApolloQuery, Mutation as ApolloMutation } from 'react-apollo';
 
-import { ApolloMultipleClientsProvider, withMultipleClients } from '.';
+import { ApolloMultipleClientsProvider, withClient } from '.';
 
 /* eslint-disable react/prop-types */
 jest.mock('react-apollo', () => ({
@@ -32,7 +32,7 @@ describe('React Apollo Multiple Clients', () => {
 
   it('should throw error when client cannot be found', () => {
     try {
-      const Enriched = withMultipleClients()(ApolloMutation);
+      const Enriched = withClient()(ApolloMutation);
       renderer.create(
         <ApolloMultipleClientsProvider clients={clientList}>
           <Enriched />
@@ -44,8 +44,8 @@ describe('React Apollo Multiple Clients', () => {
   });
 
   it('should provide correct client', () => {
-    const EnrichedQuery = withMultipleClients('test')(ApolloQuery);
-    const EnrichedMutation = withMultipleClients('test')(ApolloMutation);
+    const EnrichedQuery = withClient('test')(ApolloQuery);
+    const EnrichedMutation = withClient('test')(ApolloMutation);
 
     const app = renderer.create(
       <ApolloMultipleClientsProvider clients={{ test: 'clientos' }}>
@@ -58,7 +58,7 @@ describe('React Apollo Multiple Clients', () => {
   });
 
   it('should not override client outside provider', () => {
-    const Enriched = withMultipleClients('test')(ApolloQuery);
+    const Enriched = withClient('test')(ApolloQuery);
 
     const app = renderer.create(
       <div>
@@ -70,7 +70,7 @@ describe('React Apollo Multiple Clients', () => {
   });
 
   it('should override client inside provider', () => {
-    const Enriched = withMultipleClients('test')(ApolloMutation);
+    const Enriched = withClient('test')(ApolloMutation);
 
     const app = renderer.create(
       <div>
@@ -99,7 +99,7 @@ describe('React Apollo Multiple Clients', () => {
       client: objectOf(any).isRequired,
     };
 
-    const Enriched = withMultipleClients('test')(Foo);
+    const Enriched = withClient('test')(Foo);
 
     const app = renderer.create(
       <ApolloMultipleClientsProvider clients={{ test: 'clientos' }}>
