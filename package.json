@@ -1,6 +1,6 @@
 {
   "name": "@titelmedia/react-apollo-multiple-clients",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Use Multiple Clients for Your GraphQL Queries with React Apollo Client",
   "keywords": [
     "React Apollo",
