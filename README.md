@@ -10,7 +10,7 @@ yarn @titelmedia/react-apollo-multiple-clients
 ```
 
 ## Usage
-You can get rid of the original `<ApolloProvider>` and use `<ApolloMultipleClientsProvider>` instead. Use the Higher Order Component 'withMultipleClients' to set a namespace.
+You can get rid of the original `<ApolloProvider>` and use `<ApolloMultipleClientsProvider>` instead. Use the Higher Order Component 'withClient' to set a namespace.
 
 ```js
 import React from 'react';
@@ -18,7 +18,7 @@ import ReactDOM from 'react-dom';
 import ApolloClient from 'apollo-boost';
 import { Query, Mutation } from 'react-apollo';
 
-import { ApolloMultipleClientsProvider, withMultipleClients } from '@titelmedia/react-apollo-multiple-clients';
+import { ApolloMultipleClientsProvider, withClient } from '@titelmedia/react-apollo-multiple-clients';
 
 const client1 = new ApolloClient({
   uri: 'https://graphql.client1.com'
@@ -53,8 +53,8 @@ const Component = ({ client, ...rest }) => (
   </Mutation>
 );
 
-const WrapperComponentClient1 = withMultipleClients('firstNamespace')(Component);
-const WrapperComponentClient2 = withMultipleClients('secondNamespace')(Component);
+const WrapperComponentClient1 = withClient('firstNamespace')(Component);
+const WrapperComponentClient2 = withClient('secondNamespace')(Component);
 
 const App = () => (
   <ApolloMultipleClientsProvider clients={clientList}>
