@@ -15,7 +15,7 @@ export default (clientNamespace, Provider = ApolloProvider, Consumer = ApolloCon
             const client = getClient(clientNamespace);
             let result = <WrappedComponent {...props} />;
             if (!context || context.client !== client) {
-              result = (<Provider client={client}>{result}</Provider>);
+              result = <Provider client={client}>{result}</Provider>;
             }
             return result;
           }}
