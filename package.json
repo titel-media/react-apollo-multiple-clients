@@ -30,8 +30,8 @@
     "react-dom": "^16.8.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^7.6.1",
-    "@commitlint/config-conventional": "^7.6.0",
+    "@commitlint/cli": "^9.1.2",
+    "@commitlint/config-conventional": "^9.1.2",
     "@titelmedia/eslint-config-es6": "^1.2.4",
     "babel-core": "^6.22.0",
     "babel-eslint": "^10.0.2",
