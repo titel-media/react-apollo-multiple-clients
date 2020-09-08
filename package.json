@@ -69,6 +69,7 @@
   },
   "resolutions": {
     "kind-of": "^6.0.3",
+    "lodash": "^4.17.19",
     "mem": "^4.0.0",
     "minimist": "^0.2.1"
   }
